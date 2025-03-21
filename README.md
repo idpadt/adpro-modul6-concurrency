@@ -39,3 +39,9 @@ Lalu handle_connection diakhiri dengan pembuatan response secara manual, dan dan
 Sekarang handle_connection menangani satu tambahan endpoint, yakni /sleep. Saat masuk ke endpoint tersebut, server akan tidur selama 5 detik sebelum mengirimkan halaman hello.html. Tidur ini mensimulasikan server yang pelan/lemot.
 
 Saat kita masuk ke /sleep lalu langsung membuka /, server akan menangani kedua request di thread yang sama. Dan karena /sleep memerlukan 5 detik, maka / juga perlu menunggu 5 detik tersebut selesai. Akibat server yang single thread ini adalah, apabila ada respon yang pelan, hal ini akan menciptakan sebuah bottleneck dan mempengaruhi request lain.
+
+# Commit 5 Reflection
+
+Pada main.rs, akan dibuat sebuah ThreadPool dengan kapasitas terbatas yang akan menangani multithreading. Setiap request yang datang akan langsung dikerjakan oleh ThreadPool tersebut. Implementasi ThreadPool menggunakan beberapa fitur dari Rust, yakni thread, mpsc channels, Arc, dan Mutex. 
+
+Singkatnya, ThreadPool akan berisi sejumlah Worker yang masing-masing memiliki thread sendiri. Setiap Worker akan menerima Job (yakni kode yang akan dijalankan) dari ThreadPool melalui channel. Arc membolehkan lebih dari satu Worker untuk menerima dari channel yang sama, sedangkan Mutex memastikan bahwa satu Job hanya akan diterima oleh satu Worker.
