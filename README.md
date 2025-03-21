@@ -33,3 +33,9 @@ Fungsi handle_connection disini dapat memperlihatkan halaman hello, namun dapat 
 Pertama, fungsi ini diawali dengan line variabel buf_reader dan request_line yang akan membaca request yang datang, lebih spesifiknya baris pertama dari request yang berisi status requestnya. Selanjutnya, apabila requestnya merupakan request GET untuk path "/" maka response yang diberikan akan memiliki status 200 OK dan berisi hello.html. Namun selain request itu, response yang diberikan akan memiliki status 404 NOT FOUND dan berisi 404.html.
 
 Lalu handle_connection diakhiri dengan pembuatan response secara manual, dan dan akan dikirim ke client.
+
+# Commit 4 Reflection
+
+Sekarang handle_connection menangani satu tambahan endpoint, yakni /sleep. Saat masuk ke endpoint tersebut, server akan tidur selama 5 detik sebelum mengirimkan halaman hello.html. Tidur ini mensimulasikan server yang pelan/lemot.
+
+Saat kita masuk ke /sleep lalu langsung membuka /, server akan menangani kedua request di thread yang sama. Dan karena /sleep memerlukan 5 detik, maka / juga perlu menunggu 5 detik tersebut selesai. Akibat server yang single thread ini adalah, apabila ada respon yang pelan, hal ini akan menciptakan sebuah bottleneck dan mempengaruhi request lain.
