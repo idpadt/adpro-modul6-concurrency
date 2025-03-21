@@ -23,3 +23,13 @@ message-body
 Variabel status_line berisi versi http, kode status response, dan frase status kode. Lalu variabel contents membaca isi hello.html. Dan length merupakan panjang dari isi html yang sudah dibaca. Dan yang terakhir, variabel response merupakan respon yang dibuat secara manual, dimana berisi status respon, panjang isi (yang dimasukkan ke header respon), dan isi dari respon, dengan menggunakan format!().
 
 Line terakhir mengirim kembali respon yang sudah dibuat ke client.
+
+# Commit 3 Reflection
+
+![commit_3_proof](assets/images/commit_3_proof.png)
+
+Fungsi handle_connection disini dapat memperlihatkan halaman hello, namun dapat memperlihatkan halaman error apabila diperlukan.
+
+Pertama, fungsi ini diawali dengan line variabel buf_reader dan request_line yang akan membaca request yang datang, lebih spesifiknya baris pertama dari request yang berisi status requestnya. Selanjutnya, apabila requestnya merupakan request GET untuk path "/" maka response yang diberikan akan memiliki status 200 OK dan berisi hello.html. Namun selain request itu, response yang diberikan akan memiliki status 404 NOT FOUND dan berisi 404.html.
+
+Lalu handle_connection diakhiri dengan pembuatan response secara manual, dan dan akan dikirim ke client.
